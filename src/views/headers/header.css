@@ -1,0 +1,41 @@
+.zvale-header-box{
+  width: 100%;
+  background: #fff;
+}
+.zvale-header {
+  width: 1210px;
+  margin: 0 auto;
+  height: 80px;
+  display: flex;
+  justify-content: space-between
+}
+
+.zvale-logo {
+  height: 60px;
+  margin: 10px;
+  flex: 3
+}
+
+.zvale-logo-image{
+  height: 60px;
+  cursor: pointer;
+}
+
+.zvale-nav {
+  max-width: 900px;
+  height: 60px;
+  margin: 10px;
+  flex: 9;
+  display: flex;
+  justify-content: flex-end;
+  line-height: 60px;
+}
+
+.zvale-nav li {
+  text-align: center;
+  font-size: 16px;
+  color: #212121;
+  margin: 0 10px;
+  padding: 0 10px;
+  cursor: pointer
+}

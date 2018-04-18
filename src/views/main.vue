@@ -1,17 +1,31 @@
 <template>
   <div>
-    <Zheader></Zheader>
+    <z-header></z-header>
     <main>
       <router-view />
     </main>
-    <Zfooter></Zfooter>
+    <z-footer></z-footer>
   </div>
 </template>
 <script>
 export default {
+  data() {
+    return {
+      header: '',
+      footer: ''
+    }
+  },
+  created() {},
+  methods: {
+    getNetInfo() {}
+  },
   components: {
-    Zheader: resolve => { require(['@/views/headers/normal'], resolve) },
-    Zfooter: resolve => { require(['@/views/footers/normal'], resolve) }
+    'z-header': resolve => {
+      require(['@/views/headers/normal'], resolve)
+    },
+    'z-footer': resolve => {
+      require(['@/views/footers/normal'], resolve)
+    }
   }
 }
 </script>
