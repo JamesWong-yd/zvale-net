@@ -1,29 +1,36 @@
 <template>
-  <div :is="component"></div>
+  <div :is="component">
+    123132
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      component: 'Zsinger'
+      component: 'z-singer'
     }
   },
   created() {
-    this.component = `Z${this.$route.params.id}`
+    this.getPageInfo(this.$route.params.id)
+  },
+  methods: {
+    getPageInfo(url) {
+      this.component = url === 'index' ? 'z-singer' : `z-${url}`
+    }
   },
   watch: {
     $route(to, from) {
-      this.component = `Z${to.params.id}`
+      this.getPageInfo(to.params.id)
     }
   },
   components: {
-    Zsinger: resolve => {
+    'z-singer': resolve => {
       require(['@/views/singers/normal'], resolve)
     },
-    Zdetail: resolve => {
+    'z-detail': resolve => {
       require(['@/views/details/normal'], resolve)
     },
-    Zlist: resolve => {
+    'z-list': resolve => {
       require(['@/views/lists/normal'], resolve)
     }
   }
