@@ -6,32 +6,32 @@
         <div v-else class="zvale-logo-text">{{headerInfo.logo.content}}</div>
       </div>
       <ul class="zvale-nav">
-        <li v-for="(nav, index) in headerInfo.nav" :style="navStyle(nav.path)" :key="index" @click="goPage(nav.path)">{{nav.name}}</li>
+        <li v-for="(nav, index) in headerInfo.nav" @mouseover="hoverColor($event, nav.path, true)" @mouseout="hoverColor($event, nav.path, false)" :style="navStyle(nav.path)" :key="index" @click="goPage(nav.path)">{{nav.name}}</li>
       </ul>
     </div>
   </header>
 </template>
 <script>
-import './header.css'
 export default {
+  props: {
+    headerInfo: {
+      background: String,
+      logo: {
+        type: String,
+        content: String
+      },
+      nav: Array,
+      color: String,
+      activeNav: {
+        type: String,
+        color: String,
+        otherColor: String
+      }
+    }
+  },
   data() {
     return {
-      activeIndex: '',
-      headerInfo: {
-        background: '',
-        logo: {
-          type: 'image',
-          content: '../../../static/images/logo-min.png'
-        },
-        nav: [],
-        color: '',
-        hoverColor: '',
-        activeNav: {
-          type: 'text', // border \ text \ background
-          color: 'red',
-          otherColor: '#dac'
-        }
-      }
+      activeIndex: 'index'
     }
   },
   computed: {
@@ -42,31 +42,30 @@ export default {
     }
   },
   created() {
-    this.getHeaderInfo()
     this.activeIndex = this.$router.history.current.path
-    console.log(this.$router)
   },
   methods: {
-    getHeaderInfo() {
-      this.headerInfo.color = '#fff'
-      this.headerInfo.background = '#8BC34A'
-      this.headerInfo.hoverColor = ''
-      this.headerInfo.activeNav = {
-        type: 'border',
-        color: 'red',
-        otherColor: '#dac'
-      }
-      this.headerInfo.nav = [
-        { path: '/index', name: '菜单1' },
-        { path: '/list', name: '菜单2' },
-        { path: '/detail', name: '菜单3' }
-      ]
-    },
     goPage(path) {
       this.$router.push({ path: path })
       this.activeIndex = path
     },
-    mousemoveColor() {},
+    hoverColor(event, index, action) {
+      const that = event.currentTarget
+      const hoverType = this.headerInfo.activeNav.type
+      const hoverColor = action
+        ? this.headerInfo.activeNav.color
+        : this.headerInfo.color
+      const otherHoverColor = this.headerInfo.activeNav.otherColor
+      if (this.activeIndex !== index) {
+        that.style.color = hoverColor
+        if (hoverType === 'border') {
+          that.style.borderBottom = action ? `3px solid ${otherHoverColor}` : ''
+        }
+        if (hoverType === 'background') {
+          that.style.background = action ? otherHoverColor : ''
+        }
+      }
+    },
     navStyle(index) {
       const actnav = { color: this.headerInfo.color }
       if (this.activeIndex === index) {
@@ -77,7 +76,7 @@ export default {
           }`
         }
         if (this.headerInfo.activeNav.type === 'background') {
-          actnav.background = `${this.headerInfo.activeNav.otherColor}`
+          actnav.background = this.headerInfo.activeNav.otherColor
         }
       }
       return actnav
@@ -92,4 +91,56 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.zvale-header-box {
+  width: 100%;
+  background: #fff;
+}
+
+.zvale-header {
+  min-width: 1210px;
+  max-width: 1520px;
+  padding: 0 10px;
+  margin: 0 auto;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.zvale-logo {
+  height: 50px;
+  margin: 5px;
+  overflow: hidden;
+}
+
+.zvale-logo-image {
+  height: 50px;
+  cursor: pointer;
+}
+
+.zvale-logo-text {
+  font-size: 22px;
+  color: #212121;
+  line-height: 50px;
+  cursor: pointer;
+}
+
+.zvale-nav {
+  max-width: 900px;
+  height: 60px;
+  margin: 0;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  line-height: 60px;
+  transition: all 0.5s;
+}
+
+.zvale-nav li {
+  text-align: center;
+  font-size: 16px;
+  color: #212121;
+  margin: 0 10px;
+  padding: 0 10px;
+  cursor: pointer;
+}
 </style>
