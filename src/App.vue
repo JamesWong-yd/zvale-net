@@ -16,7 +16,12 @@ export default {
 }
 ul,
 ol,
-li {
+li,
+dl,
+dd,
+dt {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 </style>
