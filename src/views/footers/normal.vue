@@ -6,7 +6,7 @@
           <dl :class="{zvaleflex:footerInfo.flex}" v-for="(nav, index) in footerInfo.nav" :key="index">
             <dt :style="navTitleColor">{{nav.title}}</dt>
             <dd v-for="(navitem, index) in nav.list" :key="index">
-              <span :style="navListColor" @click="currentPath(navitem.path)">{{navitem.name}}</span>
+              <span :style="navListColor" @mouseover="hoverColor($event, true)" @mouseout="hoverColor($event, false)" @click="currentPath(navitem.path)">{{navitem.name}}</span>
             </dd>
           </dl>
         </div>
@@ -25,7 +25,7 @@
       <div class="zvale-footer-copyright">
         <p class="">{{ footerInfo.company }}</p>
         <p>
-          <a href="http://www.miitbeian.gov.cn">{{ footerInfo.registerNo }}</a>
+          <a href="http://www.miitbeian.gov.cn" target="_blank">{{ footerInfo.registerNo }}</a>
         </p>
       </div>
     </div>
@@ -36,30 +36,12 @@
 export default {
   props: {
     footerInfo: {
-      background: {
-        type: String,
-        default: '#ccc'
-      },
-      navTitleColor: {
-        type: String,
-        default: '#333'
-      },
-      navListColor: {
-        type: String,
-        default: '#222'
-      },
-      navHoverColor: {
-        type: String,
-        default: '#f00'
-      },
-      company: {
-        type: String,
-        default: '请输入你的公司或版权信息'
-      },
-      registerNo: {
-        type: String,
-        default: '请输入你的备案号'
-      },
+      background: String,
+      navTitleColor: String,
+      navListColor: String,
+      navHoverColor: String,
+      company: String,
+      registerNo: String,
       flex: Boolean,
       nav: Array,
       phone: String,
@@ -120,6 +102,13 @@ export default {
   methods: {
     currentPath(path) {
       this.$router.push({ path: path })
+    },
+    hoverColor(event, action) {
+      const that = event.currentTarget
+      const houvrColor = action
+        ? this.footerInfo.navHoverColor
+        : this.footerInfo.navListColor
+      that.style.color = houvrColor
     }
   }
 }
@@ -139,7 +128,7 @@ export default {
 }
 
 .zvale-footer-container {
-  border-bottom: 1px solid #666;
+  border-bottom: 1px solid #ccc;
   display: flex;
 }
 
@@ -152,8 +141,9 @@ export default {
   margin: 10px;
   width: 200px;
 }
-.zvaleflex{
-  flex:1
+
+.zvaleflex {
+  flex: 1;
 }
 
 .zvale-footer-nav dt {

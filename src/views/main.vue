@@ -13,32 +13,28 @@ export default {
     return {
       header: {
         headerInfo: {
-          background: '#ccc',
-          logo: {
-            type: 'image',
-            content: '../../../static/images/logo-min.png'
-          },
+          background: '#8BC34A',
+          logoType: 'image',
+          logoContent: '../../../static/images/logo-min.png',
           nav: [
             { path: '/index', name: '菜单1' },
             { path: '/list', name: '菜单2' },
             { path: '/detail', name: '菜单3' }
           ],
           color: '#fff',
-          activeNav: {
-            type: 'background', // border \ text \ background
-            color: 'red',
-            otherColor: '#dac'
-          }
-        },
-        type: 'normal'
+          activeNavType: 'background', // border \ text \ background
+          activeNavColor: 'red',
+          activeNavOtherColor: '#dac',
+          type: 'normal'
+        }
       },
       footer: {
         footerInfo: {
-          background: '#ccc',
+          background: '#8BC34A',
           company: 'zvale',
           registerNo: '粤12390812903-1',
-          navTitleColor: '#fff',
-          navListColor: 'red',
+          navTitleColor: '#DCEDC8',
+          navListColor: '#FFFFFF',
           navHoverColor: '',
           flex: false,
           nav: [
@@ -77,20 +73,20 @@ export default {
           workdayColor: '#fff',
           workdaySize: '16px',
           other: 'asdsad',
-          otherColor: '',
+          otherColor: '#fff',
           contactType: 'image',
-          image: '../../static/images/logo-min.png'
-        },
-        type: 'normal'
+          image: '../../static/images/logo-min.png',
+          type: 'normal'
+        }
       }
     }
   },
   computed: {
     headerComponent() {
-      return `header-${this.header.type}`
+      return `header-${this.header.headerInfo.type}`
     },
     footerComponent() {
-      return `footer-${this.header.type}`
+      return `footer-${this.footer.footerInfo.type}`
     }
   },
   created() {},
